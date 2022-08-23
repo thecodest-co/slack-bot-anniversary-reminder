@@ -1,0 +1,24 @@
+{
+  "name": "slack-bot-anniversary-reminder",
+  "version": "1.0.0",
+  "description": "Cody anniversary reminder - slack bot extension for The Codest",
+  "scripts": {
+    "start": "serverless offline --noPrependStageInUrl",
+    "lint": "eslint ./src --fix"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@slack/bolt": "^3.2.0",
+    "date-fns": "^2.29.1",
+    "google-spreadsheet": "^3.3.0",
+    "string-similarity": "^4.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "serverless": "^2.72.3",
+    "serverless-offline": "^8.8.1",
+    "serverless-offline-scheduler": "^0.5.0"
+  }
+}
