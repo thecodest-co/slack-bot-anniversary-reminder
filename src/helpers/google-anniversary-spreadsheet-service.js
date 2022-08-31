@@ -8,10 +8,13 @@ const { botApp } = require('./aws-slack-bot');
 function mapToUserObj(row) {
     const date = new Date(row.date.replace(/(\d{2}).(\d{2}).(\d{4})/, '$2/$1/$3'));
 
+    const todayDate = new Date(date);
+    todayDate.setFullYear((new Date()).getFullYear());
+
     return {
         name: row.name,
         date: format(date, 'dd-MM-yyyy'),
-        valid: isToday(date),
+        valid: !isToday(date) && isToday(todayDate),
     };
 }
 
