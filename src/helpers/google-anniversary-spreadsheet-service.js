@@ -2,7 +2,7 @@ const {
     format, isToday, isWeekend, nextMonday,
 } = require('date-fns');
 const { googleSpreadsheet } = require('./google-anniversary-spreadsheet');
-const { getAnniversaryMessageForUser } = require('../config/messages');
+const { messages } = require('../config/messages');
 const { botApp } = require('./aws-slack-bot');
 
 function mapToUserObj(row) {
@@ -33,6 +33,14 @@ function getScheduleDate(offset = 0) {
     return new Date(today.getTime() + (1000 * delay));
 }
 
+function getMessage(userId) {
+    const replacer = new RegExp('<@MENTION>', 'g');
+
+    let text = messages[Math.floor(Math.random() * messages.length)].text;
+
+    return text.replace(replacer, `<@${userId}>`);
+}
+
 async function getGoogleSpreadsheet() {
     // Initialize Auth
     await googleSpreadsheet.useServiceAccountAuth({
@@ -59,7 +67,7 @@ async function getValidAnniversaryUsers() {
 }
 
 async function scheduleAnniversaryMessageForUser(user, offset) {
-    const message = getAnniversaryMessageForUser(user.id);
+    const message = getMessage(user.id);
     // scheduleMessage requires integer of unix epoch in seconds
     const roundedScheduleDateInUnixEpoch = Math.round(getScheduleDate(offset).getTime() / 1000);
 
